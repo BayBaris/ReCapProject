@@ -30,7 +30,7 @@ namespace ConsoleUI
                         Console.WriteLine("-----Car List-----");
                         foreach (var cars in carManager.GetAll())
                         {
-                            Console.WriteLine("CarID: " + cars.CarID);
+                            Console.WriteLine("Name: " + cars.CarName);
                             Console.WriteLine("BrandID: " + cars.BrandID);
                             Console.WriteLine("ColorID: " + cars.ColorID);
                             Console.WriteLine("Model Year:" + cars.ModelYear);
@@ -45,7 +45,7 @@ namespace ConsoleUI
                         int brandID = Convert.ToInt32(Console.ReadLine());
                         foreach (var cars in carManager.GetByBrandID(brandID))
                         {
-                            Console.WriteLine("CarID: " + cars.CarID);
+                            Console.WriteLine("Name: " + cars.CarName);
                             Console.WriteLine("ColorID: " + cars.ColorID);
                             Console.WriteLine("Model Year:" + cars.ModelYear);
                             Console.WriteLine("Daily Price: " + cars.DailyPrice);
@@ -59,7 +59,7 @@ namespace ConsoleUI
                         int colorID = Convert.ToInt32(Console.ReadLine());
                         foreach (var cars in carManager.GetByBrandID(colorID))
                         {
-                            Console.WriteLine("CarID: " + cars.CarID);
+                            Console.WriteLine("Name: " + cars.CarName);
                             Console.WriteLine("BrandID: " + cars.BrandID);
                             Console.WriteLine("Model Year:" + cars.ModelYear);
                             Console.WriteLine("Daily Price: " + cars.DailyPrice);
@@ -68,7 +68,7 @@ namespace ConsoleUI
                         }
                         break;
                     case 4:
-                        carManager.Add(new Car {BrandID = 1, ColorID = 1, DailyPrice = 1450, ModelYear = "2019", Descriptions = "Tesla Model Y" });
+                        carManager.Add(new Car {BrandID = 1, ColorID = 1, CarName = "Model Y",DailyPrice = 1450, ModelYear = "2019", Descriptions = "Otomatik - Elektrik" });
                         break;
                     case 5:
                         int deleteCar;
@@ -76,7 +76,7 @@ namespace ConsoleUI
                         carManager.Delete(new Car { CarID = deleteCar });
                         break;
                     case 6:
-                        carManager.Update(new Car {CarID = 9,BrandID = 1, ColorID = 2, DailyPrice = 1100, ModelYear = "2021", Descriptions = "Tesla Roadstar" });
+                        carManager.Update(new Car {CarID = 2,BrandID = 1, ColorID = 2,CarName= "Model 3", DailyPrice = 1100, ModelYear = "2021", Descriptions = "otomatik - Elektrik" });
                         break;
                     
                     default:
