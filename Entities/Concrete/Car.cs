@@ -10,8 +10,8 @@ namespace Entities.Concrete
         public int CarID { get; set; }
         public int BrandID { get; set; }
         public int ColorID { get; set; }
-        public int ModelYear { get; set; }
-        public double DailyPrice { get; set; }
-        public string Description { get; set; }
+        public string ModelYear { get; set; }
+        public decimal DailyPrice { get; set; }
+        public string Descriptions { get; set; }
     }
 }
