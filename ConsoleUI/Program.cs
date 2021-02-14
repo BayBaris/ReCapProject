@@ -18,6 +18,9 @@ namespace ConsoleUI
                 Console.WriteLine("[1] Run Car Manager\n" +
                     "[2] Run Color Manager\n" +
                     "[3] Run Brand Manager\n" +
+                    "[4] Run User Manager\n" +
+                    "[5] Run Customer Manager\n" +
+                    "[6] Run Rental Manager\n" +
                     "[0] Exit Program");
 
                 managerSelection = Convert.ToInt32(Console.ReadLine());
@@ -32,10 +35,193 @@ namespace ConsoleUI
                     case 3:
                         RunBrandManager();
                         break;
+                    case 4:
+                        RunUserManager();
+                        break;
+                    case 5:
+                        RunCustomerManager();
+                        break;
+                    case 6:
+                        RunRentalManager();
+                        break;
                     default:
                         break;
                 }
             }          
+        }
+        private static void RunRentalManager()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            int options = -1;
+            while (options != 0)
+            {
+                Console.WriteLine("[1] List All Rentals\n" +
+                    "[2] Get Rental By ID\n" +
+                    "[3] Get All Rental With Details\n" +
+                    "[4] Add Rental\n" +
+                    "[5] Delete Rental\n" +
+                    "[6] Update Rental\n" +
+                    "[0] Exit Menu" +
+                    "");
+                options = Convert.ToInt32(Console.ReadLine());
+                switch (options)
+                {
+                    case 1:
+                        foreach (var rental in rentalManager.GetAll().Data)
+                        {
+                            Console.WriteLine("Rental ID: " + rental.RentalID);
+                            Console.WriteLine("Customer ID: " + rental.CustomerID);
+                            Console.WriteLine("Car ID: " + rental.CarID);
+                            Console.WriteLine("Rent Date: " + rental.RentDate);
+                            Console.WriteLine("Return Date: " + rental.ReturnDate);
+                        }
+                        break;
+                    case 2:
+                        Console.WriteLine(rentalManager.GetID(2).Data.CarID);
+                        Console.WriteLine(rentalManager.GetID(2).Data.CustomerID);
+                        Console.WriteLine(rentalManager.GetID(2).Data.RentDate);
+                        Console.WriteLine(rentalManager.GetID(2).Data.ReturnDate);
+                        break;
+                    case 3:
+                        var GetRentDetail = rentalManager.GetRentalDetails();
+                        foreach (var rent in GetRentDetail.Data)
+                        {
+                            Console.WriteLine("No: {0}\n" +
+                                "Car: {1}\n" +
+                                "First Name: {2}\n" +
+                                "Last Name: {3}\n" +
+                                "Email: {4}\n" +
+                                "Rent Date: {5}\n" +
+                                "Return Date: {6}\n" +
+                                "Daily Price: {7} $\n" +
+                                "----------------------------",
+                                rent.RentalID, rent.CarName, rent.FirstName, rent.LastName, rent.Email,rent.RentDate, rent.ReturnDate, rent.DailyPrice);
+                        }
+                        Console.WriteLine(GetRentDetail.Message);
+                        break;
+                    case 4:
+                        //rentalManager.Add(new Rental { CompanyName = "Holy Mustance", UserID = 2 });
+                        Console.WriteLine("Rent Added.");
+                        break;
+                    case 5:
+                        Console.WriteLine("-Enter Rental ID-");
+                        int deletedrental = Convert.ToInt32(Console.ReadLine());
+                        rentalManager.Delete(new Rental { CustomerID = deletedrental });
+                        break;
+                    case 6:
+                        Console.WriteLine("-Enter Rental ID-");
+                        int updatedrental = Convert.ToInt32(Console.ReadLine());
+                        rentalManager.Update(new Rental
+                        {
+                            RentalID = updatedrental,
+                            RentDate = DateTime.Now,
+                            ReturnDate = DateTime.Now
+                        });
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+        }
+
+        private static void RunCustomerManager()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            int options = -1;
+            while (options != 0)
+            {
+                Console.WriteLine("[1] List All Customers\n" +
+                    "[2] Get Customer By ID\n" +
+                    "[3] Add Customer\n" +
+                    "[4] Delete Customer\n" +
+                    "[5] Update Customer\n" +
+                    "[0] Exit Menu" +
+                    "");
+                options = Convert.ToInt32(Console.ReadLine());
+                switch (options)
+                {
+                    case 1:
+                        foreach (var customer in customerManager.GetAll().Data)
+                        {
+                            Console.WriteLine("Customer ID: " + customer.CustomerID);
+                            Console.WriteLine("User ID: " + customer.UserID);
+                            Console.WriteLine("Company Name: " + customer.CompanyName);                            
+                        }
+                        break;
+                    case 2:
+                        Console.WriteLine(customerManager.GetID(2).Data.CompanyName);
+                        break;
+                    case 3:
+                        customerManager.Add(new Customer { CompanyName = "Holy Mustance",UserID = 2});
+                        break;
+                    case 4:
+                        Console.WriteLine("-Enter Customer ID-");
+                        int deletedcustomer = Convert.ToInt32(Console.ReadLine());
+                        customerManager.Delete(new Customer { CustomerID = deletedcustomer });
+                        break;
+                    case 5:
+                        Console.WriteLine("-Enter Customer ID-");
+                        int updatedcustomer = Convert.ToInt32(Console.ReadLine());
+                        customerManager.Update(new Customer
+                        {
+                            CustomerID = updatedcustomer,
+                            CompanyName = "Boris"                           
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        private static void RunUserManager()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+            int options = -1;
+            while (options != 0)
+            {
+                Console.WriteLine("[1] List All User\n" +
+                    "[2] Get User By ID\n" +
+                    "[3] Add User\n" +
+                    "[4] Delete User\n" +
+                    "[5] Update User\n" +
+                    "[0] Exit Menu" +
+                    "");
+                options = Convert.ToInt32(Console.ReadLine());
+                switch (options)
+                {
+                    case 1:
+                        foreach (var user in userManager.GetAll().Data)
+                        {
+                            Console.WriteLine("User ID: " + user.UserID);
+                            Console.WriteLine("First Name: " + user.FirstName);
+                            Console.WriteLine("Last Name: " + user.LastName);
+                            Console.WriteLine("Email: " + user.Email);
+                        }
+                        break;
+                    case 2:
+                        Console.WriteLine(userManager.GetID(2).Data.FirstName);
+                        Console.WriteLine(userManager.GetID(2).Data.LastName);
+                        break;
+                    case 3:
+                        userManager.Add(new User { FirstName = "Utku",LastName = "Yerimdar",Email = "Bruh@gmail.com",Password = "BruHH" });
+                        break;
+                    case 4:
+                        Console.WriteLine("-Enter User ID-");
+                        int deleteduser = Convert.ToInt32(Console.ReadLine());
+                        userManager.Delete(new User { UserID = deleteduser });
+                        break;
+                    case 5:
+                        Console.WriteLine("-Enter User ID-");
+                        int updateduser = Convert.ToInt32(Console.ReadLine());
+                        userManager.Update(new User { UserID = updateduser, FirstName = "Boris",LastName = "Karakaya",
+                            Email = "baybarisk@outlook.com",Password = "1234567890" });
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private static void RunBrandManager()
@@ -44,12 +230,12 @@ namespace ConsoleUI
             int options = -1;
             while (options != 0)
             {
-                Console.WriteLine("1)List All Brand\n" +
-                    "2)Get Brand By ID\n" +
-                    "3)Add Brand\n" +
-                    "4)Delete Brand\n" +
-                    "5)Update Brand\n" +
-                    "0)Exit Menu" +
+                Console.WriteLine("[1] List All Brand\n" +
+                    "[2] Get Brand By ID\n" +
+                    "[3] Add Brand\n" +
+                    "[4] Delete Brand\n" +
+                    "[5] Update Brand\n" +
+                    "[0] Exit Menu" +
                     "");
                 options = Convert.ToInt32(Console.ReadLine());
                 switch (options)

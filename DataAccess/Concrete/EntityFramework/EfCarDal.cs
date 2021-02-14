@@ -17,15 +17,23 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (RentCarContext carContext = new RentCarContext())
             {
-                //Cars tablosunu önce Brands tabşosu ile aradından da Colors tablosu ile ilişkilendirerek daha sonrasında ise...
+                //Cars tablosunu önce Brands tablosu ile aradından da Colors tablosu ile ilişkilendirerek daha sonrasında ise...
                 //...CarDetailsDto nesnemizin içindeki değerler ile ilişkilendirdik...
                 var result = from c in carContext.Cars
                              join b in carContext.Brands
                              on c.BrandID equals b.BrandID
                              join cl in carContext.Colors
                              on c.ColorID equals cl.ColorID
-                             select new CarDetailsDto {CarName = c.CarName, ColorName = cl.ColorName,BrandName = b.BrandName,
-                                 CarID = c.CarID,DailyPrice = c.DailyPrice, ModelYear = c.ModelYear,Descriptions= c.Descriptions};
+                             select new CarDetailsDto
+                             {
+                                 CarName = c.CarName,
+                                 ColorName = cl.ColorName,
+                                 BrandName = b.BrandName,
+                                 CarID = c.CarID,
+                                 DailyPrice = c.DailyPrice,
+                                 ModelYear = c.ModelYear,
+                                 Descriptions = c.Descriptions
+                             };
                 return result.ToList();
                             
             }
