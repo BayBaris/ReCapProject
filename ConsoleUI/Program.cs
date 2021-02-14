@@ -1,8 +1,10 @@
 ﻿using Business.Concrete;
+using Core.Utilities;
 using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
+using System.Collections.Generic;
 
 namespace ConsoleUI
 {
@@ -53,13 +55,13 @@ namespace ConsoleUI
                 switch (options)
                 {
                     case 1:
-                        foreach (var brand in brandManager.GetAll())
+                        foreach (var brand in brandManager.GetAll().Data)
                         {
                             Console.WriteLine("Brand ID: {0} = {1}", brand.BrandID, brand.BrandName);
                         }
                         break;
                     case 2:
-                        Console.WriteLine(brandManager.GetID(2).BrandName);
+                        Console.WriteLine(brandManager.GetID(2).Data.BrandName);
                         break;
                     case 3:
                         Console.WriteLine("-Enter Brand Name-");
@@ -99,13 +101,14 @@ namespace ConsoleUI
                 switch (options)
                 {
                     case 1:
-                        foreach (var color in colorManager.GetAll())
+                        foreach (var color in colorManager.GetAll().Data)
                         {
                             Console.WriteLine("Color ID: {0} = {1}", color.ColorID, color.ColorName);
                         }
+                        Console.WriteLine(colorManager.GetAll().Message);
                         break;
                     case 2:
-                        Console.WriteLine(colorManager.GetID(2).ColorName);
+                        Console.WriteLine(colorManager.GetID(2).Data.ColorName);
                         break;
                     case 3:
                         Console.WriteLine("-Enter Color Name-");
@@ -148,10 +151,12 @@ namespace ConsoleUI
                 switch (options)
                 {
                     case 1:
+                        var GetAll = carManager.GetAll();
                         Console.WriteLine("-----Car List-----");
-                        foreach (var cars in carManager.GetAll())
+                        foreach (var cars in GetAll.Data)
                         {
                             Console.WriteLine("Name: " + cars.CarName);
+                            Console.WriteLine("CarID: " + cars.CarID);
                             Console.WriteLine("BrandID: " + cars.BrandID);
                             Console.WriteLine("ColorID: " + cars.ColorID);
                             Console.WriteLine("Model Year:" + cars.ModelYear);
@@ -159,14 +164,17 @@ namespace ConsoleUI
                             Console.WriteLine("Description: " + cars.Descriptions);
                             Console.WriteLine("------------------");
                         }
+                        Console.WriteLine(GetAll.Message);
+                        Console.WriteLine("------------------");
                         break;
-                    case 2:
+                    case 2:                        
                         Console.WriteLine("-----Car List but Only BrandID-----");
                         Console.WriteLine("Enter Brand ID:");
                         int brandID = Convert.ToInt32(Console.ReadLine());
-                        foreach (var cars in carManager.GetByBrandID(brandID))
+                        foreach (var cars in carManager.GetByBrandID(brandID).Data)
                         {
                             Console.WriteLine("Name: " + cars.CarName);
+                            Console.WriteLine("CarID: " + cars.CarID);
                             Console.WriteLine("ColorID: " + cars.ColorID);
                             Console.WriteLine("Model Year:" + cars.ModelYear);
                             Console.WriteLine("Daily Price: " + cars.DailyPrice);
@@ -178,9 +186,10 @@ namespace ConsoleUI
                         Console.WriteLine("-----Car List but Only ColorID-----");
                         Console.WriteLine("Enter Color ID:");
                         int colorID = Convert.ToInt32(Console.ReadLine());
-                        foreach (var cars in carManager.GetByBrandID(colorID))
+                        foreach (var cars in carManager.GetByBrandID(colorID).Data)
                         {
                             Console.WriteLine("Name: " + cars.CarName);
+                            Console.WriteLine("CarID: "  + cars.CarID);
                             Console.WriteLine("BrandID: " + cars.BrandID);
                             Console.WriteLine("Model Year:" + cars.ModelYear);
                             Console.WriteLine("Daily Price: " + cars.DailyPrice);
@@ -201,7 +210,8 @@ namespace ConsoleUI
                         carManager.Update(new Car { CarID = 2, BrandID = 1, ColorID = 2, CarName = "Model 3", DailyPrice = 1100, ModelYear = "2021", Descriptions = "otomatik - Elektrik" });
                         break;
                     case 7:
-                        foreach (var car in carManager.GetCarDetails())
+                        var GetAllDetail = carManager.GetCarDetails();
+                        foreach (var car in GetAllDetail.Data)
                         {
                             Console.WriteLine("No: {0}\n" +
                                 "Car: {1}\n" +
@@ -213,6 +223,7 @@ namespace ConsoleUI
                                 "----------------------------",
                                 car.CarID, car.CarName, car.BrandName, car.ColorName, car.ModelYear, car.DailyPrice, car.Descriptions);
                         }
+                        Console.WriteLine(GetAllDetail.Message);
                         break;
                     default:
                         break;
