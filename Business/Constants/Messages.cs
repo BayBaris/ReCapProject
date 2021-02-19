@@ -20,5 +20,7 @@ namespace Business.Constants
         public static string BrandUpdated = "New Brand Updated Successfully";
         public static string ColorUpdated = "New Color Updated Successfully";
         public static string RentalAddError = "This car didn't return right now! Please rent another car";
+        public static string CarAddErrorNull = "Car name can't blank!";
+        public static string CarAddErrorMinLength = "Car name must be at least 2 character!";
     }
 }
