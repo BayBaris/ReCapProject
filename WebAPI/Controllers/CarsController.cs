@@ -52,7 +52,6 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-
         public IActionResult Add(Car car)
         {
             var result = _carService.Add(car);
