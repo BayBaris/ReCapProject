@@ -22,5 +22,7 @@ namespace Business.Constants
         public static string RentalAddError = "This car didn't return right now! Please rent another car";
         public static string CarAddErrorNull = "Car name can't blank!";
         public static string CarAddErrorMinLength = "Car name must be at least 2 character!";
+        public static string CarCountLimitError = "System have so many car number! You can't add or update car.";
+        internal static string NumberOfImagesLimitError;
     }
 }
