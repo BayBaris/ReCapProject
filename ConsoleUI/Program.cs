@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using Core.Entities.Concrete;
 using Core.Utilities;
 using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
@@ -194,7 +195,7 @@ namespace ConsoleUI
                     case 1:
                         foreach (var user in userManager.GetAll().Data)
                         {
-                            Console.WriteLine("User ID: " + user.UserID);
+                            Console.WriteLine("User ID: " + user.UserId);
                             Console.WriteLine("First Name: " + user.FirstName);
                             Console.WriteLine("Last Name: " + user.LastName);
                             Console.WriteLine("Email: " + user.Email);
@@ -205,18 +206,18 @@ namespace ConsoleUI
                         Console.WriteLine(userManager.GetID(2).Data.LastName);
                         break;
                     case 3:
-                        userManager.Add(new User { FirstName = "Utku",LastName = "Yerimdar",Email = "Bruh@gmail.com",Password = "BruHH" });
+                        userManager.Add(new User { FirstName = "Utku",LastName = "Yerimdar",Email = "Bruh@gmail.com"});
                         break;
                     case 4:
                         Console.WriteLine("-Enter User ID-");
                         int deleteduser = Convert.ToInt32(Console.ReadLine());
-                        userManager.Delete(new User { UserID = deleteduser });
+                        userManager.Delete(new User { UserId = deleteduser });
                         break;
                     case 5:
                         Console.WriteLine("-Enter User ID-");
                         int updateduser = Convert.ToInt32(Console.ReadLine());
-                        userManager.Update(new User { UserID = updateduser, FirstName = "Boris",LastName = "Karakaya",
-                            Email = "baybarisk@outlook.com",Password = "1234567890" });
+                        userManager.Update(new User { UserId = updateduser, FirstName = "Boris",LastName = "Karakaya",
+                            Email = "baybarisk@outlook.com" });
                         break;
                     default:
                         break;

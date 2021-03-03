@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Core.Entities.Concrete;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -23,6 +25,13 @@ namespace Business.Constants
         public static string CarAddErrorNull = "Car name can't blank!";
         public static string CarAddErrorMinLength = "Car name must be at least 2 character!";
         public static string CarCountLimitError = "System have so many car number! You can't add or update car.";
-        internal static string NumberOfImagesLimitError;
+        public static string NumberOfImagesLimitError;
+        public static string AuthorizationDenied;
+        internal static string UserRegistered;
+        internal static User UserNotFound;
+        internal static User PasswordError;
+        internal static string SuccessfulLogin;
+        internal static string UserAlreadyExists;
+        internal static string AccessTokenCreated;
     }
 }

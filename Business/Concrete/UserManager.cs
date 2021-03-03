@@ -1,12 +1,11 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Entities.Concrete;
 using Core.Utilities;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Concrete
 {
@@ -40,9 +39,19 @@ namespace Business.Concrete
             return new SuccesDataResult<List<User>>(_userDal.GetAll());
         }
 
+        public IDataResult<User> GetByMail(string email)
+        {
+            return new SuccesDataResult<User>(_userDal.Get(u => u.Email == email));
+        }
+
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        {
+            return new SuccesDataResult<List<OperationClaim>>(_userDal.GetClaims(user), "Roller Geldi");
+        }
+
         public IDataResult<User> GetID(int userID)
         {
-            return new SuccesDataResult<User>(_userDal.Get(u=>u.UserID == userID));
+            return new SuccesDataResult<User>(_userDal.Get(u=>u.UserId == userID));
         }
 
         public IResult Update(User user)
