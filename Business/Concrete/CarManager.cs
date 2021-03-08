@@ -23,7 +23,7 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
-        [SecuredOperation("product.add,admin")]
+        [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
@@ -36,7 +36,7 @@ namespace Business.Concrete
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
         }
-        [SecuredOperation("product.add,admin")]
+        [SecuredOperation("car.delete,admin")]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {
@@ -64,7 +64,7 @@ namespace Business.Concrete
         {
             return new SuccesDataResult<List<CarDetailsDto>>(_carDal.GetCarDetails(),Messages.CarDetailsListed);
         }
-        [SecuredOperation("product.add,admin")]
+        [SecuredOperation("car.update,admin")]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Update(Car car)
         {
@@ -75,7 +75,7 @@ namespace Business.Concrete
         private IResult CheckCountOfCars(string carName)
         {
             var result = _carDal.GetAll(c => c.CarName == carName).Count;
-            if (result > 3)
+            if (result > 30)
             {
                 return new ErrorResult(Messages.CarCountLimitError);
             }

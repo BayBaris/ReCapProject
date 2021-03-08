@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities;
 using Core.Utilities.Business;
@@ -26,7 +28,9 @@ namespace Business.Concrete
             _carService = carService;
 
         }
+        [SecuredOperation("carImage.add,admin")]
         [ValidationAspect(typeof(CarImageValidator))]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Add(IFormFile file, CarImage carImage)
         {
             var result = BusinessRules.Run(CheckIfImagesCount(carImage.CarID));
@@ -39,7 +43,8 @@ namespace Business.Concrete
             _carImageDal.Add(carImage);
             return new SuccessResult();
         }
-
+        [SecuredOperation("carImage.delete,admin")]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Delete(CarImage carImage)
         {
             var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) +
@@ -56,12 +61,12 @@ namespace Business.Concrete
             _carImageDal.Delete(carImage);
             return new SuccessResult();
         }
-
+        [CacheAspect]
         public IDataResult<List<CarImage>> GetAll()
         {
             return new SuccesDataResult<List<CarImage>>( _carImageDal.GetAll());
         }
-
+        [CacheAspect]
         public IDataResult<List<CarImage>> GetByCarID(int carID)
         {
             var result = BusinessRules.Run(CheckIfCarImageNull(carID));
@@ -71,11 +76,13 @@ namespace Business.Concrete
             }
             return new SuccesDataResult<List<CarImage>>(CheckIfCarImageNull(carID).Data);
         }
+        [CacheAspect]
         public IDataResult<CarImage> GetID(int imageID)
         {
             return new SuccesDataResult<CarImage>(_carImageDal.Get(c=>c.ImageID==imageID));
         }
-
+        [SecuredOperation("carImage.update,admin")]
+        [CacheRemoveAspect("ICarImageService.Get")]
         public IResult Update(IFormFile file, CarImage carImage)
         {
             var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) +

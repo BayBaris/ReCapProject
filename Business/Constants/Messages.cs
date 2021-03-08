@@ -25,13 +25,13 @@ namespace Business.Constants
         public static string CarAddErrorNull = "Car name can't blank!";
         public static string CarAddErrorMinLength = "Car name must be at least 2 character!";
         public static string CarCountLimitError = "System have so many car number! You can't add or update car.";
-        public static string NumberOfImagesLimitError;
-        public static string AuthorizationDenied;
-        public static string UserRegistered;
-        public static string UserNotFound;
-        public static string PasswordError;
-        public static string SuccessfulLogin;
-        public static string UserAlreadyExists;
-        public static string AccessTokenCreated;
+        public static string NumberOfImagesLimitError =  "" ;
+        public static string AuthorizationDenied = "Access Denied!";
+        public static string UserRegistered = "User saved.";
+        public static string UserNotFound = "This user doesn't exist!";
+        public static string PasswordError = "Wrong Password!";
+        public static string SuccessfulLogin = "Login Succesful";
+        public static string UserAlreadyExists = "The user already exist in system.";
+        public static string AccessTokenCreated = "Access Token created succesfully.";
     }
 }
